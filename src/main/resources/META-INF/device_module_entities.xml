@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Open Source Solutions Town. Product: Hiperium Created: 09-08-2013 - 
+	09:00:00 The contents of this file are copyrighted by OssTown Corporation 
+	and it is protected by the license: "GPL V3." You can find a copy of this 
+	license at: http://www.osstown.com Copyright 2013 OssTown Corp. All rights 
+	reserved. -->
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
+	<package>com.hiperium.device.model.control</package>
+	<entity class="com.hiperium.device.model.control.Task">
+		<table name="con_task" />
+		<attributes>
+			<id name="id" />
+			<basic name="homeId">
+				<column name="home_id" nullable="false" />
+			</basic>
+			<basic name="executionDate">
+				<column name="execution_date" nullable="false" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="active">
+				<column name="active" nullable="false" />
+			</basic>
+			<basic name="deviceOperationLevel">
+				<column name="device_operation_level" />
+			</basic>
+			<basic name="comments">
+				<column name="comments" length="300" />
+			</basic>
+			<basic name="action">
+				<column name="action" length="10" nullable="false" />
+				<enumerated>STRING</enumerated>
+			</basic>
+			<basic name="frequency">
+				<column name="frequency" length="15" nullable="false" />
+				<enumerated>STRING</enumerated>
+			</basic>
+			<version name="version">
+				<column name="version" length="8" />
+			</version>
+			<one-to-many name="devices" mapped-by="task">
+			    <cascade><cascade-all/></cascade>
+			</one-to-many>
+		</attributes>
+	</entity>
+	<entity class="com.hiperium.device.model.control.Zone">
+		<table name="con_zone" />
+		<attributes>
+			<id name="id" />
+			<basic name="homeId">
+				<column name="home_id" nullable="false" />
+			</basic>
+			<basic name="name">
+				<column name="name" length="100" nullable="false" />
+			</basic>
+			<basic name="comments">
+				<column name="comments" length="300" />
+			</basic>
+			<basic name="iconURL">
+				<column name="icon_url" length="100" />
+			</basic>
+			<basic name="type">
+				<column name="type" length="30" nullable="false" />
+				<enumerated>STRING</enumerated>
+			</basic>
+			<version name="version">
+				<column name="version" length="8" />
+			</version>
+		</attributes>
+	</entity>
+	<entity class="com.hiperium.device.model.control.ProfileZone">
+		<table name="con_profile_zone" />
+		<attributes>
+			<embedded-id name="pk" />
+			<basic name="active">
+				<column name="active" nullable="false" />
+			</basic>
+			<many-to-one name="zone" maps-id="zoneId">
+				<join-column name="zone_id" referenced-column-name="id"/>
+			</many-to-one>
+		</attributes>
+	</entity>
+	<entity class="com.hiperium.device.model.control.LuminosityRule">
+		<table name="con_luminosity_rule" />
+		<attributes>
+			<id name="id" />
+			<basic name="active">
+				<column name="active" nullable="false" />
+			</basic>
+			<basic name="comments">
+				<column name="comments" length="300" />
+			</basic>
+		</attributes>
+	</entity>
+	<entity class="com.hiperium.device.model.control.DeviceTask">
+		<table name="con_device_task" />
+		<attributes>
+			<embedded-id name="pk" />
+			<basic name="active">
+				<column name="active" nullable="false" />
+			</basic>
+			<many-to-one name="task" maps-id="taskId">
+				<join-column name="task_id" referenced-column-name="id"/>
+			</many-to-one>
+		</attributes>
+	</entity>
+	<entity class="com.hiperium.device.model.control.DeviceLuminosityRule">
+		<table name="con_device_luminosity_rule" />
+		<attributes>
+			<embedded-id name="pk" />
+			<basic name="active">
+				<column name="active" nullable="false" />
+			</basic>
+		</attributes>
+	</entity>
+	
+	<embeddable class="com.hiperium.device.model.control.DeviceTaskPK">
+		<attributes>
+			<basic name="deviceId">
+				<column name="device_id" nullable="false" />
+			</basic>
+			<basic name="taskId">
+				<column name="task_id" nullable="false" />
+			</basic>
+		</attributes>	
+	</embeddable>
+	<embeddable class="com.hiperium.device.model.control.DeviceLuminosityRulePK">
+		<attributes>
+			<basic name="deviceId">
+				<column name="device_id" nullable="false" />
+			</basic>
+			<basic name="ruleId">
+				<column name="rule_id" nullable="false" />
+			</basic>
+		</attributes>	
+	</embeddable>
+	<embeddable class="com.hiperium.device.model.control.ProfileZonePK">
+		<attributes>
+			<basic name="zoneId">
+				<column name="zone_id" nullable="false" />
+			</basic>
+			<basic name="profileId">
+				<column name="profile_id" nullable="false" />
+			</basic>
+		</attributes>	
+	</embeddable>
+</entity-mappings>
