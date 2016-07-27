@@ -6,8 +6,8 @@ MAINTAINER "Andres Solorzano" andres.solorzano@hiperium.com
 ENV JBOSS_HOME /opt/jboss/wildfly
 
 # Copy hiperium service files into Wildfly
-ADD resources/postgresql-9.4-module.tar.gz $JBOSS_HOME/modules/system/layers/base/org/
-COPY resources/standalone.xml $JBOSS_HOME/standalone/configuration/
+ADD opt/postgresql-9.4-module.tar.gz $JBOSS_HOME/modules/system/layers/base/org/
+COPY opt/standalone.xml $JBOSS_HOME/standalone/configuration/
 COPY target/hiperium-device.war $JBOSS_HOME/standalone/deployments/
 
 # Creates the wildlfy user administrator
